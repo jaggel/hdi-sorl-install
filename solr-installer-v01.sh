@@ -105,7 +105,8 @@ syncFileExists=$(hadoop fs -ls / | grep $syncFile | wc -l)
 
 if [[ $syncFileExists == 0 ]]; then
     echo "Creating sync file on WASB"
-    hadoop fs -touchz wasb:///$syncFile
+    #hadoop fs -touchz wasb:///$syncFile
+	hadoop fs -touchz adl:///$syncFile
     echo "Configuring Zookeeper's Solr config."
     scripts/cloud-scripts/zkcli.sh -cmd upconfig -zkhost $ZKHOSTS -d solr/collection1/conf/ -n hditestconfig
     scripts/cloud-scripts/zkcli.sh -cmd linkconfig -zkhost $ZKHOSTS -collection collection1 -confname hditestconfig -solrhome solr
